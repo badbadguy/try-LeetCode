@@ -696,6 +696,586 @@ public class everyday {
             add(3);
         }});
         System.out.println(minimumTotal(list));
+    }
 
+    /**
+     * 95. 不同的二叉搜索树 II
+     * <p>
+     * 给定一个整数 n，生成所有由 1 ... n 为节点所组成的 二叉搜索树 。（0 <= n <= 8）
+     * <p>
+     * 输入：3
+     * 输出：
+     * [
+     *   [1,null,3,2],
+     *   [3,2,null,1],
+     *   [3,1,null,null,2],
+     *   [2,1,3],
+     *   [1,null,2,null,3]
+     * ]
+     * 解释：
+     * 以上的输出对应以下 5 种不同结构的二叉搜索树：
+     * <p>
+     * 1         3     3      2      1
+     * \       /     /      / \      \
+     * 3     2     1      1   3      2
+     * /     /       \                 \
+     * 2     1         2                 3
+     */
+    public List<TreeNode> generateTrees(int n) {
+        if (n <= 0) {
+            return new LinkedList<TreeNode>();
+        }
+        return generateTrees(1, n);
+    }
+
+    private List<TreeNode> generateTrees(int start, int end) {
+        List<TreeNode> resultList = new LinkedList<TreeNode>();
+        if (start > end) {
+            resultList.add(null);
+            return resultList;
+        }
+
+        //遍历所有可能的根节点
+        for (int i = start; i <= end; i++) {
+            List<TreeNode> leftList = generateTrees(start, i - 1);
+            List<TreeNode> rightList = generateTrees(i + 1, end);
+
+            for (TreeNode left : leftList) {
+                for (TreeNode right : rightList) {
+                    TreeNode oneTree = new TreeNode(i);
+                    oneTree.left = left;
+                    oneTree.right = right;
+                    resultList.add(oneTree);
+                }
+            }
+        }
+
+        return resultList;
+    }
+
+    public class TreeNode {
+        int val;
+        TreeNode left;
+        TreeNode right;
+
+        TreeNode() {
+        }
+
+        TreeNode(int val) {
+            this.val = val;
+        }
+
+        TreeNode(int val, TreeNode left, TreeNode right) {
+            this.val = val;
+            this.left = left;
+            this.right = right;
+        }
+    }
+
+    @Test
+    public void try95() {
+        List<TreeNode> treeNodes = generateTrees(3);
+        System.out.println();
+    }
+
+    /**
+     * 1025. 除数博弈
+     * <p>
+     * 爱丽丝和鲍勃一起玩游戏，他们轮流行动。爱丽丝先手开局。
+     * <p>
+     * 最初，黑板上有一个数字 N 。在每个玩家的回合，玩家需要执行以下操作：
+     * <p>
+     * 选出任一 x，满足 0 < x < N 且 N % x == 0 。
+     * 用 N - x 替换黑板上的数字 N 。
+     * 如果玩家无法执行这些操作，就会输掉游戏。
+     * <p>
+     * 只有在爱丽丝在游戏中取得胜利时才返回 True，否则返回 false。假设两个玩家都以最佳状态参与游戏。
+     * <p>
+     * 输入：2
+     * 输出：true
+     * 解释：爱丽丝选择 1，鲍勃无法进行操作。
+     * 输入：3
+     * 输出：false
+     * 解释：爱丽丝选择 1，鲍勃也选择 1，然后爱丽丝无法进行操作。
+     */
+    public boolean divisorGame(int N) {
+        return N % 2 == 0;
+        /*int index = 0;
+        while (true) {
+            index++;
+            int x = selectOne(N);
+            if (x == -1) {
+                break;
+            }
+            N -= x;
+        }
+        return index % 2 == 0;*/
+    }
+
+    private int selectOne(int N) {
+        for (int x = 1; x < N; x++) {
+            if (N % x == 0) {
+                return x;
+            }
+        }
+        return -1;
+    }
+
+    @Test
+    public void try1025() {
+        System.out.println(divisorGame(2));
+        System.out.println(divisorGame(3));
+    }
+
+    /**
+     * 104. 二叉树的最大深度
+     * <p>
+     * 给定一个二叉树，找出其最大深度。
+     * 二叉树的深度为根节点到最远叶子节点的最长路径上的节点数。
+     * <p>
+     * 给定二叉树 [3,9,20,null,null,15,7]
+     * 返回它的最大深度 3
+     * 3
+     * / \
+     * 9  20
+     * /  \
+     * 15   7
+     */
+    public int maxDepth(TreeNode root) {
+        return root == null ? 0 : Math.max(this.maxDepth(root.left), this.maxDepth(root.right)) + 1;
+//        if (root == null) return 0;
+//        return maxDepth(root, 0, 1);
+    }
+
+    private int maxDepth(TreeNode root, int index, int max) {
+        index++;
+        max = Math.max(index, max);
+        if (root.right != null) {
+            max = maxDepth(root.right, index, max);
+        }
+        if (root.left != null) {
+            max = maxDepth(root.left, index, max);
+        }
+        return max;
+    }
+
+    @Test
+    public void try104() {
+        TreeNode treeNode = new TreeNode(3);
+        treeNode.left = new TreeNode(9);
+        treeNode.right = new TreeNode(20);
+        TreeNode temp = treeNode.left;
+        temp.left = new TreeNode(15);
+        temp.right = new TreeNode(7);
+
+        System.out.println(maxDepth(treeNode));
+    }
+
+    /**
+     * 343. 整数拆分
+     * 给定一个正整数 n，将其拆分为至少两个正整数的和，并使这些整数的乘积最大化。 返回你可以获得的最大乘积。
+     * <p>
+     * 示例 1:
+     * 输入: 2
+     * 输出: 1
+     * 解释: 2 = 1 + 1, 1 × 1 = 1。
+     * <p>
+     * 示例 2:
+     * 输入: 10
+     * 输出: 36
+     * 解释: 10 = 3 + 3 + 4, 3 × 3 × 4 = 36。
+     */
+    public int integerBreak(int n) {
+        /*if (n - 3 < 2) {
+            return (n / 2) * (n-n/2);
+        }
+
+        StringBuilder tempStr = new StringBuilder();
+        while (n - 3 >= 2) {
+            tempStr.append(3);
+            tempStr.append(",");
+            n -= 3;
+        }
+        tempStr.append(n);
+        String[] split = tempStr.toString().split(",");
+        int result = Integer.parseInt(split[0]);
+        for (int i = 1; i < split.length; i++) {
+            result = result * Integer.parseInt(split[i]);
+        }
+        return result;*/
+        //网友牛逼plus
+        long[] longs = new long[]{0, 0, 1, 2, 4, 6, 9, 12, 18, 27, 36, 54, 81, 108, 162, 243, 324, 486, 729, 972, 1458, 2187, 2916, 4374, 6561, 8748, 13122, 19683, 26244, 39366, 59049, 78732, 118098, 177147, 236196, 354294, 531441, 708588, 1062882, 1594323, 2125764, 3188646, 4782969, 6377292, 9565938, 14348907, 19131876, 28697814, 43046721, 57395628, 86093442, 129140163, 172186884, 258280326, 387420489, 516560652, 774840978, 1162261467, 1549681956, 2324522934L};
+        return (int) longs[n];
+    }
+
+    @Test
+    public void try343() {
+        System.out.println(integerBreak(10));
+    }
+
+    /**
+     * 面试题 08.03. 魔术索引
+     * 魔术索引。 在数组A[0...n-1]中，有所谓的魔术索引，满足条件A[i] = i。给定一个有序整数数组，编写一种方法找出魔术索引，
+     * 若有的话，在数组A中找出一个魔术索引，
+     * 如果没有，则返回-1。若有多个魔术索引，返回索引值最小的一个。
+     * <p>
+     * 示例1:
+     * 输入：nums = [0, 2, 3, 4, 5]
+     * 输出：0
+     * 说明: 0下标的元素为0
+     * <p>
+     * 示例2:
+     * 输入：nums = [1, 1, 1]
+     * 输出：1
+     */
+    public int findMagicIndex(int[] nums) {
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] == i) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    @Test
+    public void ms0803() {
+        System.out.println(findMagicIndex(new int[]{0, 2, 3, 4, 5}));
+        System.out.println(findMagicIndex(new int[]{1, 1, 1}));
+    }
+
+    /**
+     * 415. 字符串相加
+     * 给定两个字符串形式的非负整数 num1 和num2 ，计算它们的和。
+     * <p>
+     * num1 和num2 的长度都小于 5100.
+     * num1 和num2 都只包含数字 0-9.
+     * num1 和num2 都不包含任何前导零。
+     * 你不能使用任何內建 BigInteger 库， 也不能直接将输入的字符串转换为整数形式。
+     */
+    public String addStrings(String num1, String num2) {
+        int num1Size = num1.length();
+        int num2Size = num2.length();
+        int maxSize = Math.max(num1Size, num2Size);
+
+        StringBuilder resultStr = new StringBuilder();
+
+        boolean carry = false;
+        for (int i = 0; i < maxSize; i++) {
+            char char1 = num1Size - i - 1 >= 0 ? num1.charAt(num1Size - i - 1) : '0';
+            char char2 = num2Size - i - 1 >= 0 ? num2.charAt(num2Size - i - 1) : '0';
+            int addNum = char1 + char2 - 48 * 2;
+            if (carry) {
+                addNum++;
+                carry = false;
+            }
+            if (addNum >= 10) {
+                addNum -= 10;
+                carry = true;
+            }
+            resultStr.insert(0, addNum);
+        }
+        if (carry) {
+            resultStr.insert(0, 1);
+        }
+        return resultStr.toString();
+    }
+
+    @Test
+    public void try415() {
+        System.out.println(addStrings("1", "29"));
+    }
+
+    /**
+     * 336. 回文对
+     * 给定一组唯一的单词， 找出所有不同 的索引对(i, j)，使得列表中的两个单词， words[i] + words[j] ，可拼接成回文串。
+     * <p>
+     * 示例 1:
+     * <p>
+     * 输入: ["abcd","dcba","lls","s","sssll"]
+     * 输出: [[0,1],[1,0],[3,2],[2,4]]
+     * 解释: 可拼接成的回文串为 ["dcbaabcd","abcddcba","slls","llssssll"]
+     * 示例 2:
+     * <p>
+     * 输入: ["bat","tab","cat"]
+     * 输出: [[0,1],[1,0]]
+     * 解释: 可拼接成的回文串为 ["battab","tabbat"]
+     */
+    public List<List<Integer>> palindromePairs(String[] words) {
+        List<List<Integer>> resultList = new LinkedList<>();
+        for (int i = 0; i < words.length; i++) {
+            for (int j = 0; j < words.length; j++) {
+                //如果是当前下标，直接跳过
+                if (i == j) {
+                    continue;
+                }
+                //校验是否回文
+                String checkStr = words[i] + words[j];
+
+                boolean skip = false;
+                for (int k = 0, l = checkStr.length() - 1; k < l; k++, l--) {
+                    if (checkStr.charAt(k) != checkStr.charAt(l)) {
+                        skip = true;
+                        break;
+                    }
+                }
+                if (skip) {
+                    continue;
+                }
+
+                LinkedList<Integer> temp = new LinkedList<>();
+                temp.add(i);
+                temp.add(j);
+                resultList.add(temp);
+            }
+        }
+        return resultList;
+    }
+
+    @Test
+    public void try336() {
+        List<List<Integer>> lists1 = palindromePairs(new String[]{"abcd", "dcba", "lls", "s", "sssll"});
+        List<List<Integer>> lists = palindromePairs(new String[]{"bat", "tab", "cat"});
+        List<List<Integer>> lists2 = palindromePairs(new String[]{"aba", ""});
+        System.out.println();
+    }
+
+
+    public class TreeNode100 {
+        int val;
+        TreeNode100 left;
+        TreeNode100 right;
+
+        TreeNode100() {
+        }
+
+        TreeNode100(int val) {
+            this.val = val;
+        }
+
+        TreeNode100(int val, TreeNode100 left, TreeNode100 right) {
+            this.val = val;
+            this.left = left;
+            this.right = right;
+        }
+    }
+
+    public boolean isSameTree(TreeNode100 p, TreeNode100 q) {
+        if (p == null && q == null) {
+            return true;
+        } else if (p == null || q == null) {
+            return false;
+        } else if (p.val != q.val) {
+            return false;
+        } else {
+            return isSameTree(p.right, q.right) && isSameTree(p.left, q.left);
+        }
+    }
+
+    @Test
+    public void try100() {
+        TreeNode100 temp1 = new TreeNode100(1, null, new TreeNode100(3));
+        TreeNode100 temp2 = new TreeNode100(1, new TreeNode100(3), null);
+        System.out.println(isSameTree(temp1, temp2));
+    }
+
+    /**
+     * 696. 计数二进制子串
+     * <p>
+     * 给定一个字符串 s，计算具有相同数量0和1的非空(连续)子字符串的数量，并且这些子字符串中的所有0和所有1都是组合在一起的。
+     * <p>
+     * 重复出现的子串要计算它们出现的次数。
+     * <p>
+     * 示例 1 :
+     * <p>
+     * 输入: "00110011"
+     * 输出: 6
+     * 解释: 有6个子串具有相同数量的连续1和0：“0011”，“01”，“1100”，“10”，“0011” 和 “01”。
+     * <p>
+     * 请注意，一些重复出现的子串要计算它们出现的次数。
+     * <p>
+     * 另外，“00110011”不是有效的子串，因为所有的0（和1）没有组合在一起。
+     * 示例 2 :
+     * <p>
+     * 输入: "10101"
+     * 输出: 4
+     * 解释: 有4个子串：“10”，“01”，“10”，“01”，它们具有相同数量的连续1和0。
+     * 注意：
+     * <p>
+     * s.length 在1到50,000之间。
+     * s 只包含“0”或“1”字符。
+     */
+    public int countBinarySubstrings(String s) {
+        char flag = s.charAt(0);
+        int[] temp = new int[s.length()];
+        int tempIndex = 0;
+        int result = 0;
+
+        for (int i = 0; i < s.length(); i++) {
+            char that = s.charAt(i);
+            if (that == flag) {
+                temp[tempIndex]++;
+            } else {
+                flag = that;
+                tempIndex++;
+                temp[tempIndex] = 1;
+            }
+
+            if (tempIndex > 0 && temp[tempIndex - 1] >= temp[tempIndex]) {
+                result++;
+            }
+        }
+        return result;
+    }
+
+    @Test
+    public void try696() {
+        System.out.println(countBinarySubstrings("00110011"));
+        System.out.println(countBinarySubstrings("10101"));
+    }
+
+    /**
+     * 93. 复原IP地址
+     * 给定一个只包含数字的字符串，复原它并返回所有可能的 IP 地址格式。
+     * <p>
+     * 有效的 IP 地址正好由四个整数（每个整数位于 0 到 255 之间组成），整数之间用 '.' 分隔。
+     * <p>
+     * 示例:
+     * 输入: "25525511135"
+     * 输出: ["255.255.11.135", "255.255.111.35"]
+     */
+
+
+    public List<String> restoreIpAddresses(String s) {
+        List<String> resultList = new LinkedList<>();
+        int[] segments = new int[4];
+
+        dfs93(s, 0, 0, resultList, segments);
+
+        return resultList;
+    }
+
+    public void dfs93(String str, int index, int start, List<String> list, int[] segments) {
+
+        if (index == 4) {
+            if(start == str.length()) {
+                StringBuffer ipAddr = new StringBuffer();
+                for (int i = 0; i <= 3; i++) {
+                    ipAddr.append(segments[i]);
+                    ipAddr.append(".");
+                }
+                ipAddr.deleteCharAt(ipAddr.length()-1);
+                list.add(ipAddr.toString());
+            }
+            return;
+        }
+
+        if (index != 0) {
+            int lessNum = str.length() - start;
+            float eachNum = (float) lessNum / (4 - index);
+            if (eachNum > 3F) {
+                return;
+            }
+        }
+
+        if (start == str.length()) {
+            return;
+        }
+
+        if (str.charAt(start) == '0') {
+            segments[index] = 0;
+            dfs93(str, index + 1, start + 1, list, segments);
+        }
+
+        int temp = 0;
+        for (int i = start; i < str.length(); ++i) {
+            temp = temp * 10 + (str.charAt(i) - '0');
+            if (temp > 0 && temp <= 255) {
+                segments[index] = temp;
+                dfs93(str, index + 1, i + 1, list, segments);
+            } else {
+                break;
+            }
+        }
+    }
+
+    @Test
+    public void try93() {
+        System.out.println(restoreIpAddresses("25525511135"));
+    }
+
+    /**
+     * 130. 被围绕的区域
+     * <p>
+     * 给定一个二维的矩阵，包含 'X' 和 'O'（字母 O）。
+     * <p>
+     * 找到所有被 'X' 围绕的区域，并将这些区域里所有的 'O' 用 'X' 填充。
+     * <p>
+     * 示例:
+     * X X X X
+     * X O O X
+     * X X O X
+     * X O X X
+     * <p>
+     * 运行你的函数后，矩阵变为：
+     * X X X X
+     * X X X X
+     * X X X X
+     * X O X X
+     * <p>
+     * 解释:
+     * 被围绕的区间不会存在于边界上，换句话说，任何边界上的 'O' 都不会被填充为 'X'。
+     * 任何不在边界上，或不与边界上的 'O' 相连的 'O' 最终都会被填充为 'X'。
+     * 如果两个元素在水平或垂直方向相邻，则称它们是“相连”的。
+     */
+    public void solve(char[][] board) {
+        if (board.length == 0) {
+            return;
+        }
+
+        for (int i = 0; i < board[0].length; i++) {
+            dfs130(board, i, 0);
+            dfs130(board, i, board.length - 1);
+        }
+        for (int i = 1; i < board.length - 1; i++) {
+            dfs130(board, 0, i);
+            dfs130(board, board[0].length - 1, i);
+        }
+
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[i].length; j++) {
+                if (board[i][j] == 'x') {
+                    board[i][j] = 'O';
+                } else if (board[i][j] == 'O') {
+                    board[i][j] = 'X';
+                }
+            }
+        }
+    }
+
+    private void dfs130(char[][] board, int x, int y) {
+        if (x < 0 || x >= board[0].length || y < 0 || y >= board.length || board[y][x] != 'O') {
+            return;
+        }
+        board[y][x] = 'x';
+        dfs130(board, x - 1, y);
+        dfs130(board, x + 1, y);
+        dfs130(board, x, y - 1);
+        dfs130(board, x, y + 1);
+    }
+
+    @Test
+    public void try130() {
+        char[][] temp = {
+                {'X', 'O', 'X', 'O', 'X', 'O'},
+                {'O', 'X', 'O', 'X', 'O', 'X'},
+                {'X', 'O', 'X', 'O', 'X', 'O'},
+                {'O', 'X', 'O', 'X', 'O', 'X'}
+        };
+        solve(temp);
+
+        //[["X","O","X","O","X","O"],
+        // ["O","X","O","X","O","X"],
+        // ["X","O","X","O","X","O"],
+        // ["O","X","O","X","O","X"]]
     }
 }

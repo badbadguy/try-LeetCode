@@ -331,11 +331,83 @@ public class freeTime {
 
     @Test
     public void getLength() {
-        String temp1 = "1234567890123456";
-        String temp2 = "123456789012345";
-        String temp3 = "12345678901234";
-        System.out.println(temp1.length() != 15);
-        System.out.println(temp2.length() != 15);
-        System.out.println(temp3.length() != 15);
+        String temp1 = "xxxx分公司";
+//        String temp2 = "xxxx分公";
+
+        System.out.println(temp1.substring(0, temp1.indexOf("分公司")));
+//        System.out.println(temp2.substring(0, temp2.indexOf("分公司")));
+    }
+
+    /**
+     * 2. 两数相加
+     * <p>
+     * 给出两个 非空 的链表用来表示两个非负的整数。其中，它们各自的位数是按照 逆序 的方式存储的，并且它们的每个节点只能存储 一位 数字。
+     * 如果，我们将这两个数相加起来，则会返回一个新的链表来表示它们的和。
+     * 您可以假设除了数字 0 之外，这两个数都不会以 0 开头。
+     * <p>
+     * 示例：
+     * 输入：(2 -> 4 -> 3) + (5 -> 6 -> 4)
+     * 输出：7 -> 0 -> 8
+     * 原因：342 + 465 = 807
+     */
+    static class try2 {
+
+        public static class ListNode {
+            int val;
+            ListNode next;
+
+            ListNode(int x) {
+                val = x;
+            }
+        }
+
+        public static ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+            boolean carry = false;
+            if (l1 == null) {
+                return l2;
+            }
+            if (l2 == null) {
+                return l1;
+            }
+            ListNode resultListNode = new ListNode(0);
+            ListNode tempListNode = resultListNode;
+
+            while (true) {
+                int temp = carry ? 1 : 0;
+                int s = l1.val + l2.val + temp;
+                carry = s >= 10;
+                if (carry) s -= 10;
+                tempListNode.val = s;
+
+                if (l1.next == null && l2.next == null && !carry) {
+                    return resultListNode;
+                }
+
+                tempListNode.next = new ListNode(0);
+                tempListNode = tempListNode.next;
+
+                if (l1.next == null) {
+                    l1.next = new ListNode(0);
+                }
+                l1 = l1.next;
+                if (l2.next == null) {
+                    l2.next = new ListNode(0);
+                }
+                l2 = l2.next;
+            }
+        }
+    }
+
+    @Test
+    public void test() {
+        try2.ListNode temp1 = new try2.ListNode(2);
+        temp1.next = new try2.ListNode(4);
+        temp1.next.next = new try2.ListNode(3);
+        try2.ListNode temp2 = new try2.ListNode(5);
+        temp2.next = new try2.ListNode(6);
+        temp2.next.next = new try2.ListNode(4);
+
+        try2.ListNode listNode = try2.addTwoNumbers(temp1, temp2);
+        System.out.println();
     }
 }
