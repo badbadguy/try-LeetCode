@@ -10,7 +10,7 @@ import java.util.*;
 public class everyday {
 
     //287. 寻找重复数
-    //给定一个包含 n + 1 个整数的数组 nums，其数字都在 1 到 n 之间（包括 1 和 n），可知至少存在一个重复的整数。假设只有一个重复的整数，找出这个重复的数。
+    //给定一个包含n + 1 个整数的数组nums，其数字都在 1 到 n之间（包括 1 和 n），可知至少存在一个重复的整数。假设只有一个重复的整数，找出这个重复的数。
     class Solution {
         public int findDuplicate(int[] nums) {
             Set<Integer> numsSet = new HashSet<Integer>();
@@ -114,7 +114,7 @@ public class everyday {
      * <p>
      * 你可以认为输入字符串总是有效的；输入字符串中没有额外的空格，且输入的方括号总是符合格式要求的。
      * <p>
-     * 此外，你可以认为原始数据不包含数字，所有的数字只表示重复的次数 k ，例如不会出现像 3a 或 2[4] 的输入。
+     * 此外，你可以认为原始数据不包含数字，所有的数字只表示重复的次数 k ，例如不会出现像3a或2[4]的输入。
      * <p>
      * s = "3[a]2[bc]", 返回 "aaabcbc".
      * s = "3[a2[c]]", 返回 "accaccacc".
@@ -187,7 +187,7 @@ public class everyday {
      * 1408. 数组中的字符串匹配
      * 给你一个字符串数组 words ，数组中的每个字符串都可以看作是一个单词。请你按 任意 顺序返回 words 中是其他单词的子字符串的所有单词。
      * <p>
-     * 如果你可以删除 words[j] 最左侧和/或最右侧的若干字符得到 word[i] ，那么字符串 words[i] 就是 words[j] 的一个子字符串。
+     * 如果你可以删除 words[j]最左侧和/或最右侧的若干字符得到 word[i] ，那么字符串 words[i] 就是 words[j] 的一个子字符串。
      * <p>
      * 输入：words = ["mass","as","hero","superhero"]
      * 输出：["as","hero"]
@@ -239,12 +239,12 @@ public class everyday {
      * 输入: [1,2,3,1]
      * 输出: 4
      * 解释: 偷窃 1 号房屋 (金额 = 1) ，然后偷窃 3 号房屋 (金额 = 3)。
-     *      偷窃到的最高金额 = 1 + 3 = 4 。
+     * 偷窃到的最高金额 = 1 + 3 = 4 。
      * <p>
      * 输入: [2,7,9,3,1]
      * 输出: 12
      * 解释: 偷窃 1 号房屋 (金额 = 2), 偷窃 3 号房屋 (金额 = 9)，接着偷窃 5 号房屋 (金额 = 1)。
-     *      偷窃到的最高金额 = 2 + 9 + 1 = 12 。
+     * 偷窃到的最高金额 = 2 + 9 + 1 = 12 。
      */
     public int rob(int[] nums) {
         int max = 0;
@@ -271,14 +271,14 @@ public class everyday {
     /**
      * 238. 除自身以外数组的乘积
      * <p>
-     * 给你一个长度为 n 的整数数组 nums，其中 n > 1，返回输出数组 output ，其中 output[i] 等于 nums 中除 nums[i] 之外其余各元素的乘积。
+     * 给你一个长度为n的整数数组nums，其中n > 1，返回输出数组output，其中 output[i]等于nums中除nums[i]之外其余各元素的乘积。
      * <p>
      * 输入: [1,2,3,4]
      * 输出: [24,12,8,6]
      * <p>
      * 提示：题目数据保证数组之中任意元素的全部前缀元素和后缀（甚至是整个数组）的乘积都在 32 位整数范围内。
      * <p>
-     * 说明: 请不要使用除法，且在 O(n) 时间复杂度内完成此题。
+     * 说明: 请不要使用除法，且在O(n) 时间复杂度内完成此题。
      * <p>
      * 进阶：
      * 你可以在常数空间复杂度内完成这个题目吗？（ 出于对空间复杂度分析的目的，输出数组不被视为额外空间。）
@@ -393,10 +393,10 @@ public class everyday {
     /**
      * 990. 等式方程的可满足性
      * <p>
-     * 给定一个由表示变量之间关系的字符串方程组成的数组，每个字符串方程 equations[i] 的长度为 4，并采用两种不同的形式之一："a==b" 或 "a!=b"。
+     * 给定一个由表示变量之间关系的字符串方程组成的数组，每个字符串方程 equations[i] 的长度为 4，并采用两种不同的形式之一："a==b" 或"a!=b"。
      * 在这里，a 和 b 是小写字母（不一定不同），表示单字母变量名。
      * <p>
-     * 只有当可以将整数分配给变量名，以便满足所有给定的方程时才返回 true，否则返回 false
+     * 只有当可以将整数分配给变量名，以便满足所有给定的方程时才返回true，否则返回 false
      * <p>
      * 输入：["a==b","b!=a"]
      * 输出：false
@@ -477,7 +477,7 @@ public class everyday {
 
     /**
      * 15. 三数之和
-     * 给你一个包含 n 个整数的数组 nums，判断 nums 中是否存在三个元素 a，b，c ，使得 a + b + c = 0 ？请你找出所有满足条件且不重复的三元组。
+     * 给你一个包含 n 个整数的数组nums，判断nums中是否存在三个元素 a，b，c ，使得a + b + c = 0 ？请你找出所有满足条件且不重复的三元组。
      * <p>
      * 注意：答案中不可以包含重复的三元组。
      */
@@ -517,9 +517,9 @@ public class everyday {
 
     /**
      * 1014. 最佳观光组合
-     * 给定正整数数组 A，A[i] 表示第 i 个观光景点的评分，并且两个景点 i 和 j 之间的距离为 j - i。
+     * 给定正整数数组A，A[i]表示第 i 个观光景点的评分，并且两个景点i 和j之间的距离为j - i。
      * <p>
-     * 一对景点（i < j）组成的观光组合的得分为（A[i] + A[j] + i - j）：景点的评分之和减去它们两者之间的距离。
+     * 一对景点（i < j）组成的观光组合的得分为（A[i] + A[j] + i- j）：景点的评分之和减去它们两者之间的距离。
      * <p>
      * 返回一对观光景点能取得的最高分。
      * <p>
@@ -706,11 +706,11 @@ public class everyday {
      * 输入：3
      * 输出：
      * [
-     *   [1,null,3,2],
-     *   [3,2,null,1],
-     *   [3,1,null,null,2],
-     *   [2,1,3],
-     *   [1,null,2,null,3]
+     * [1,null,3,2],
+     * [3,2,null,1],
+     * [3,1,null,null,2],
+     * [2,1,3],
+     * [1,null,2,null,3]
      * ]
      * 解释：
      * 以上的输出对应以下 5 种不同结构的二叉搜索树：
@@ -783,13 +783,13 @@ public class everyday {
      * <p>
      * 爱丽丝和鲍勃一起玩游戏，他们轮流行动。爱丽丝先手开局。
      * <p>
-     * 最初，黑板上有一个数字 N 。在每个玩家的回合，玩家需要执行以下操作：
+     * 最初，黑板上有一个数字N。在每个玩家的回合，玩家需要执行以下操作：
      * <p>
-     * 选出任一 x，满足 0 < x < N 且 N % x == 0 。
-     * 用 N - x 替换黑板上的数字 N 。
+     * 选出任一x，满足0 < x < N 且N % x == 0。
+     * 用 N - x替换黑板上的数字 N 。
      * 如果玩家无法执行这些操作，就会输掉游戏。
      * <p>
-     * 只有在爱丽丝在游戏中取得胜利时才返回 True，否则返回 false。假设两个玩家都以最佳状态参与游戏。
+     * 只有在爱丽丝在游戏中取得胜利时才返回True，否则返回 false。假设两个玩家都以最佳状态参与游戏。
      * <p>
      * 输入：2
      * 输出：true
@@ -880,10 +880,10 @@ public class everyday {
      * 输出: 1
      * 解释: 2 = 1 + 1, 1 × 1 = 1。
      * <p>
-     * 示例 2:
+     * 示例2:
      * 输入: 10
      * 输出: 36
-     * 解释: 10 = 3 + 3 + 4, 3 × 3 × 4 = 36。
+     * 解释: 10 = 3 + 3 + 4, 3 ×3 ×4 = 36。
      */
     public int integerBreak(int n) {
         /*if (n - 3 < 2) {
@@ -987,7 +987,7 @@ public class everyday {
 
     /**
      * 336. 回文对
-     * 给定一组唯一的单词， 找出所有不同 的索引对(i, j)，使得列表中的两个单词， words[i] + words[j] ，可拼接成回文串。
+     * 给定一组唯一的单词， 找出所有不同的索引对(i, j)，使得列表中的两个单词，words[i] + words[j]，可拼接成回文串。
      * <p>
      * 示例 1:
      * <p>
@@ -1081,7 +1081,7 @@ public class everyday {
     /**
      * 696. 计数二进制子串
      * <p>
-     * 给定一个字符串 s，计算具有相同数量0和1的非空(连续)子字符串的数量，并且这些子字符串中的所有0和所有1都是组合在一起的。
+     * 给定一个字符串s，计算具有相同数量0和1的非空(连续)子字符串的数量，并且这些子字符串中的所有0和所有1都是组合在一起的。
      * <p>
      * 重复出现的子串要计算它们出现的次数。
      * <p>
@@ -1101,8 +1101,8 @@ public class everyday {
      * 解释: 有4个子串：“10”，“01”，“10”，“01”，它们具有相同数量的连续1和0。
      * 注意：
      * <p>
-     * s.length 在1到50,000之间。
-     * s 只包含“0”或“1”字符。
+     * s.length在1到50,000之间。
+     * s只包含“0”或“1”字符。
      */
     public int countBinarySubstrings(String s) {
         char flag = s.charAt(0);
@@ -1157,13 +1157,13 @@ public class everyday {
     public void dfs93(String str, int index, int start, List<String> list, int[] segments) {
 
         if (index == 4) {
-            if(start == str.length()) {
+            if (start == str.length()) {
                 StringBuffer ipAddr = new StringBuffer();
                 for (int i = 0; i <= 3; i++) {
                     ipAddr.append(segments[i]);
                     ipAddr.append(".");
                 }
-                ipAddr.deleteCharAt(ipAddr.length()-1);
+                ipAddr.deleteCharAt(ipAddr.length() - 1);
                 list.add(ipAddr.toString());
             }
             return;
@@ -1206,9 +1206,9 @@ public class everyday {
     /**
      * 130. 被围绕的区域
      * <p>
-     * 给定一个二维的矩阵，包含 'X' 和 'O'（字母 O）。
+     * 给定一个二维的矩阵，包含'X'和'O'（字母 O）。
      * <p>
-     * 找到所有被 'X' 围绕的区域，并将这些区域里所有的 'O' 用 'X' 填充。
+     * 找到所有被 'X' 围绕的区域，并将这些区域里所有的'O' 用 'X' 填充。
      * <p>
      * 示例:
      * X X X X
@@ -1223,8 +1223,8 @@ public class everyday {
      * X O X X
      * <p>
      * 解释:
-     * 被围绕的区间不会存在于边界上，换句话说，任何边界上的 'O' 都不会被填充为 'X'。
-     * 任何不在边界上，或不与边界上的 'O' 相连的 'O' 最终都会被填充为 'X'。
+     * 被围绕的区间不会存在于边界上，换句话说，任何边界上的'O'都不会被填充为'X'。
+     * 任何不在边界上，或不与边界上的'O'相连的'O'最终都会被填充为'X'。
      * 如果两个元素在水平或垂直方向相邻，则称它们是“相连”的。
      */
     public void solve(char[][] board) {
@@ -1277,5 +1277,113 @@ public class everyday {
         // ["O","X","O","X","O","X"],
         // ["X","O","X","O","X","O"],
         // ["O","X","O","X","O","X"]]
+    }
+
+    /**
+     * 494. 目标和
+     * <p>
+     * 给你一个整数数组 nums 和一个整数 target 。
+     * 向数组中的每个整数前添加'+' 或 '-' ，然后串联起所有整数，可以构造一个 表达式 ：
+     * 例如，nums = [2, 1] ，可以在 2 之前添加 '+' ，在 1 之前添加 '-' ，然后串联起来得到表达式 "+2-1" 。
+     * 返回可以通过上述方法构造的、运算结果等于 target 的不同 表达式 的数目。
+     */
+    private int findTargetSumWaysCount = 0;
+
+    public int findTargetSumWays(int[] nums, int target) {
+        //启动
+        tryToAddOrDeleteNext(nums, target, 0, 0);
+        return findTargetSumWaysCount;
+    }
+
+    private void tryToAddOrDeleteNext(int[] nums, int target, int index, int sum) {
+        //不用nums.length-1因为需要把最后一位也加/减上
+        if (index == nums.length) {
+            //已到最后一位
+            if (target == sum) {
+                findTargetSumWaysCount++;
+            }
+            return;
+        } else {
+            //增加的情况
+            tryToAddOrDeleteNext(nums, target, index + 1, sum + nums[index]);
+            //删除的情况
+            tryToAddOrDeleteNext(nums, target, index + 1, sum - nums[index]);
+        }
+    }
+
+    /**
+     * 示例 1：
+     * 输入：nums = [1,1,1,1,1], target = 3
+     * 输出：5
+     * 解释：一共有 5 种方法让最终目标和为 3 。
+     * -1 + 1 + 1 + 1 + 1 = 3
+     * +1 - 1 + 1 + 1 + 1 = 3
+     * +1 + 1 - 1 + 1 + 1 = 3
+     * +1 + 1 + 1 - 1 + 1 = 3
+     * +1 + 1 + 1 + 1 - 1 = 3
+     * <p>
+     * 示例 2：
+     * 输入：nums = [1], target = 1
+     * 输出：1
+     */
+    @Test
+    public void try494() {
+        System.out.println("5->" + findTargetSumWays(new int[]{1, 1, 1, 1, 1}, 3));
+        System.out.println("1->" + findTargetSumWays(new int[]{1}, 1));
+    }
+
+
+    /**
+     * 1449. 数位成本和为目标值的最大数字
+     * <p>
+     * 给你一个整数数组cost和一个整数target。请你返回满足如下规则可以得到的最大整数：
+     * 给当前结果添加一个数位（i + 1）的成本为cost[i]（cost数组下标从 0 开始）。
+     * 总成本必须恰好等于target。
+     * 添加的数位中没有数字 0 。
+     * 由于答案可能会很大，请你以字符串形式返回。
+     * 如果按照上述要求无法得到任何整数，请你返回 "0" 。
+     */
+    public String largestNumber(int[] cost, int target) {
+
+        return "0";
+    }
+
+
+    /**
+     * 示例 1：
+     * 输入：cost = [4,3,2,5,6,7,2,5,5], target = 9
+     * 输出："7772"
+     * 解释：添加数位 '7' 的成本为 2 ，添加数位 '2' 的成本为 3 。所以 "7772" 的代价为 2*3+ 3*1 = 9 。 "977" 也是满足要求的数字，但 "7772" 是较大的数字。
+     * 数字     成本
+     * 1  ->   4
+     * 2  ->   3
+     * 3  ->   2
+     * 4  ->   5
+     * 5  ->   6
+     * 6  ->   7
+     * 7  ->   2
+     * 8  ->   5
+     * 9  ->   5
+     * <p>
+     * 示例 2：
+     * 输入：cost = [7,6,5,5,5,6,8,7,8], target = 12
+     * 输出："85"
+     * 解释：添加数位 '8' 的成本是 7 ，添加数位 '5' 的成本是 5 。"85" 的成本为 7 + 5 = 12 。
+     * <p>
+     * 示例 3：
+     * 输入：cost = [2,4,6,2,4,6,4,4,4], target = 5
+     * 输出："0"
+     * 解释：总成本是 target 的条件下，无法生成任何整数。
+     * <p>
+     * 示例 4：
+     * 输入：cost = [6,10,15,40,40,40,40,40,40], target = 47
+     * 输出："32211"
+     */
+    @Test
+    public void try1449() {
+        System.out.println("7772->" + largestNumber(new int[]{4, 3, 2, 5, 6, 7, 2, 5, 5}, 9));
+        System.out.println("85->" + largestNumber(new int[]{7, 6, 5, 5, 5, 6, 8, 7, 8}, 12));
+        System.out.println("0->" + largestNumber(new int[]{2, 4, 6, 2, 4, 6, 4, 4, 4}, 5));
+        System.out.println("32211->" + largestNumber(new int[]{6, 10, 15, 40, 40, 40, 40, 40, 40}, 47));
     }
 }
