@@ -1,22 +1,19 @@
 import org.junit.Test;
 
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
- * @Author LiuRunYuan
- * @CreateDate 2020/6/4
+ * @author LiuRunYuan
+ * @date 2020/6/4
  */
 public class freeTime {
 
     /**
      * 1431. 拥有最多糖果的孩子
      * <p>
-     * 给你一个数组 candies 和一个整数 extraCandies ，其中 candies[i] 代表第 i 个孩子拥有的糖果数目。
+     * 给你一个数组candies和一个整数extraCandies，其中candies[i]代表第 i 个孩子拥有的糖果数目。
      * <p>
-     * 对每一个孩子，检查是否存在一种方案，将额外的 extraCandies 个糖果分配给孩子们之后，此孩子有 最多 的糖果。注意，允许有多个孩子同时拥有 最多 的糖果数目。
+     * 对每一个孩子，检查是否存在一种方案，将额外的extraCandies个糖果分配给孩子们之后，此孩子有 最多的糖果。注意，允许有多个孩子同时拥有 最多的糖果数目。
      * <p>
      * 输入：candies = [2,3,5,1,3], extraCandies = 3
      * 输出：[true,true,true,false,true]
@@ -32,18 +29,18 @@ public class freeTime {
         for (int temp : candies) {
             max = Math.max(temp, max);
         }
-        List<Boolean> result = new LinkedList<Boolean>();
-        for (int i = 0; i < candies.length; i++) {
-            result.add(candies[i] + extraCandies >= max);
+        List<Boolean> result = new LinkedList<>();
+        for (int temp : candies) {
+            result.add(temp + extraCandies >= max);
         }
         return result;
     }
 
     @Test
     public void try1431() {
-        int temp1[] = new int[]{2, 3, 5, 1, 3};
-        int temp2[] = new int[]{4, 2, 1, 1, 2};
-        int temp3[] = new int[]{12, 1, 12};
+        int[] temp1 = new int[]{2, 3, 5, 1, 3};
+        int[] temp2 = new int[]{4, 2, 1, 1, 2};
+        int[] temp3 = new int[]{12, 1, 12};
 
         System.out.println(kidsWithCandies(temp1, 3).toString());
         System.out.println(kidsWithCandies(temp2, 1).toString());
@@ -63,9 +60,7 @@ public class freeTime {
      * 输出: "umghlrlose"
      */
     public String reverseLeftWords(String s, int n) {
-        StringBuilder sb = new StringBuilder(s.substring(n));
-        sb.append(s.substring(0, n));
-        return sb.toString();
+        return s.substring(n).concat(s.substring(0, n));
     }
 
     @Test
@@ -160,9 +155,9 @@ public class freeTime {
 
     /**
      * 771. 宝石与石头
-     *  给定字符串J 代表石头中宝石的类型，和字符串 S代表你拥有的石头。 S 中每个字符代表了一种你拥有的石头的类型，你想知道你拥有的石头中有多少是宝石。
+     * 给定字符串J代表石头中宝石的类型，和字符串S代表你拥有的石头。S中每个字符代表了一种你拥有的石头的类型，你想知道你拥有的石头中有多少是宝石。
      * <p>
-     * J 中的字母不重复，J 和 S中的所有字符都是字母。字母区分大小写，因此"a"和"A"是不同类型的石头。
+     * J中的字母不重复，J和S中的所有字符都是字母。字母区分大小写，因此"a"和"A"是不同类型的石头。
      * <p>
      * 输入: J = "aA", S = "aAAbbbb"
      * 输出: 3
@@ -409,5 +404,353 @@ public class freeTime {
 
         try2.ListNode listNode = try2.addTwoNumbers(temp1, temp2);
         System.out.println();
+    }
+
+
+    /**
+     * 416. 分割等和子集
+     * 给你一个 只包含正整数 的 非空 数组 nums 。请你判断是否可以将这个数组分割成两个子集，使得两个子集的元素和相等。
+     */
+    private boolean canPartitionFlag = false;
+
+    public boolean canPartition(int[] nums) {
+        //过滤一遍数据
+        int sum = 0;
+        Set<Integer> numberSet = new HashSet<>();
+        for (int temp : nums) {
+            if (numberSet.contains(temp)) {
+                //已经出现过
+                sum -= temp;
+                numberSet.remove(temp);
+            } else {
+                //未出现过
+                sum += temp;
+                numberSet.add(temp);
+            }
+        }
+        if ((sum & 1) == 1) {
+            //该数组合计为单数  无法正好分成两个相等子集
+            return false;
+        }
+        this.canPartitionTryToAdd(numberSet.toArray(new Integer[0]), 0, sum / 2, 0);
+        return canPartitionFlag;
+    }
+
+    private void canPartitionTryToAdd(Integer[] nums, int index, int halfSum, int nowSum) {
+        System.out.println("当前标记：" + index + " 当前总和：" + nowSum + " 目标总和：" + halfSum);
+        if (canPartitionFlag) {
+            //如果已有符合条件的子集、直接返回
+            return;
+        } else if (nowSum > halfSum) {
+            //该情况已比目标值大  无需继续
+            return;
+        } else if (index == nums.length) {
+            //已到尽头
+            return;
+        }
+
+        if (nowSum == halfSum) {
+            //当前发现可分开的子集
+            canPartitionFlag = true;
+            return;
+        } else {
+            //增加
+            this.canPartitionTryToAdd(nums, index + 1, halfSum, nowSum + nums[index]);
+            //不增加
+            this.canPartitionTryToAdd(nums, index + 1, halfSum, nowSum);
+        }
+    }
+
+
+    /**
+     * 示例 1：
+     * <p>
+     * 输入：nums = [1,5,11,5]
+     * 输出：true
+     * 解释：数组可以分割成 [1, 5, 5] 和 [11] 。
+     * 示例 2：
+     * <p>
+     * 输入：nums = [1,2,3,5]
+     * 输出：false
+     * 解释：数组不能分割成两个元素和相等的子集。
+     */
+    @Test
+    public void try416() {
+        System.out.println("true->" + canPartition(new int[]{1, 5, 11, 5}));
+        System.out.println("false->" + canPartition(new int[]{1, 2, 3, 5}));
+        System.out.println("false->" + canPartition(new int[]{100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 99, 97}));
+    }
+
+    /**
+     * 在一个 2 x 3 的板上（board）有 5 块砖瓦，用数字 1~5 来表示, 以及一块空缺用0来表示.
+     * 一次移动定义为选择0与一个相邻的数字（上下左右）进行交换.
+     * 最终当板board的结果是[[1,2,3],[4,5,0]]谜板被解开。
+     * 给出一个谜板的初始状态，返回最少可以通过多少次移动解开谜板，如果不能解开谜板，则返回 -1 。
+     */
+    public int slidingPuzzle(int[][] board) {
+        //每个位置能移动的格子
+        Map<String, Set<String>> ableMoveMap = this.getAbleMoveMap();
+        //位移的消耗-确认某一种情况是否已经遇到过 以及 记录该情况的操作值
+        Map<String, Integer> routeHistoryMap = new HashMap<>();
+
+        //填充可以移动的方块
+        Queue<String> ableMoveQueue = new LinkedList<>();
+        //找到0在哪里  作为初始化
+        for (int i = 0; i <= 2; i++) {
+            for (int j = 0; j <= 3; j++) {
+                if (board[i][j] == 0) {
+                    ableMoveQueue.addAll(ableMoveMap.get(i + "-" + j));
+                    break;
+                }
+            }
+            //已经找到了就退出
+            if (ableMoveQueue.size() > 0) {
+                break;
+            }
+        }
+
+        //根本没有0
+        if (ableMoveQueue.size() == 0) {
+            return -1;
+        }
+
+        while (ableMoveQueue.size() != 0) {
+            String peek = ableMoveQueue.peek();
+            ableMoveQueue.poll();
+        }
+
+
+        return 0;
+    }
+
+    private Map<String, Set<String>> getAbleMoveMap() {
+        Map<String, Set<String>> ableMoveMap = new HashMap<>(6);
+        ableMoveMap.put("0-0", new HashSet<>(Arrays.asList("0-1", "1-0")));
+        ableMoveMap.put("0-1", new HashSet<>(Arrays.asList("0-0", "0-2", "1-1")));
+        ableMoveMap.put("0-2", new HashSet<>(Arrays.asList("0-1", "1-2")));
+        ableMoveMap.put("1-0", new HashSet<>(Arrays.asList("0-0", "1-1")));
+        ableMoveMap.put("1-1", new HashSet<>(Arrays.asList("1-0", "0-1", "1-2")));
+        ableMoveMap.put("1-2", new HashSet<>(Arrays.asList("1-1", "0-2")));
+
+
+        return ableMoveMap;
+    }
+
+    /**
+     * 输入：board = [[1,2,3],[4,0,5]]
+     * 输出：1
+     * 解释：交换 0 和 5 ，1 步完成
+     * <p>
+     * 输入：board = [[1,2,3],[5,4,0]]
+     * 输出：-1
+     * 解释：没有办法完成谜板
+     * <p>
+     * 输入：board = [[4,1,2],[5,0,3]]
+     * 输出：5
+     * 解释：
+     * 最少完成谜板的最少移动次数是 5 ，
+     * 一种移动路径:
+     * 尚未移动: [[4,1,2],[5,0,3]]
+     * 移动 1 次: [[4,1,2],[0,5,3]]
+     * 移动 2 次: [[0,1,2],[4,5,3]]
+     * 移动 3 次: [[1,0,2],[4,5,3]]
+     * 移动 4 次: [[1,2,0],[4,5,3]]
+     * 移动 5 次: [[1,2,3],[4,5,0]]
+     * <p>
+     * 输入：board = [[3,2,4],[1,5,0]]
+     * 输出：14
+     */
+    @Test
+    public void try773() {
+        System.out.println("1->" + slidingPuzzle(new int[][]{{1, 2, 3}, {4, 0, 5}}));
+        System.out.println("-1->" + slidingPuzzle(new int[][]{{1, 2, 3}, {5, 0, 4}}));
+        System.out.println("5->" + slidingPuzzle(new int[][]{{4, 1, 2}, {5, 0, 3}}));
+        System.out.println("14->" + slidingPuzzle(new int[][]{{3, 2, 4}, {1, 5, 0}}));
+    }
+
+    /**
+     * 62. 不同路径
+     * 一个机器人位于一个 m x n网格的左上角 （起始点在下图中标记为 “Start” ）。
+     * 机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角（在下图中标记为 “Finish” ）。
+     * 问总共有多少条不同的路径？
+     */
+    public int uniquePaths(int m, int n) {
+        if (m == 1 || n == 1) {
+            return 1;
+        }
+        int[][] dp = new int[m][n];
+        for (int i = 0; i < m; i++) {
+            dp[i][0] = 1;
+
+            if (i != 0) {
+                for (int j = 1; j < n; j++) {
+                    dp[0][j] = 1;
+                    dp[i][j] = dp[i - 1][j] + dp[i][j - 1];
+                }
+            }
+        }
+        return dp[m - 1][n - 1];
+    }
+
+    /**
+     * 示例 1：
+     * 输入：m = 3, n = 7
+     * 输出：28
+     * <p>
+     * 示例 2：
+     * 输入：m = 3, n = 2
+     * 输出：3
+     * 解释：
+     * 从左上角开始，总共有 3 条路径可以到达右下角。
+     * 1. 向右 -> 向下 -> 向下
+     * 2. 向下 -> 向下 -> 向右
+     * 3. 向下 -> 向右 -> 向下
+     * <p>
+     * 示例 3：
+     * 输入：m = 7, n = 3
+     * 输出：28
+     * <p>
+     * 示例 4：
+     * 输入：m = 3, n = 3
+     * 输出：6
+     */
+    @Test
+    public void try62() {
+//        System.out.println("28->" + this.uniquePaths(3, 7));
+//        System.out.println("3->" + this.uniquePaths(3, 2));
+//        System.out.println("28->" + this.uniquePaths(7, 3));
+//        System.out.println("6->" + this.uniquePaths(3, 3));
+        System.out.println("1->" + this.uniquePaths(1, 2));
+    }
+
+    /**
+     * 64. 最小路径和
+     * 给定一个包含非负整数的 m x n 网格 grid ，请找出一条从左上角到右下角的路径，使得路径上的数字总和为最小。
+     * 说明：每次只能向下或者向右移动一步。
+     */
+    public int minPathSum(int[][] grid) {
+        //每次只能向下或者向右移动一步
+        //dp存每一格子最少的步数  右下角即[m-1][n-1]
+        int sum = 0;
+        //极限情况 只有一行/列
+        if (grid.length == 1) {
+            //只能一直向右
+            for (int temp : grid[0]) {
+                sum += temp;
+            }
+            return sum;
+        }
+        if (grid[0].length == 1) {
+            //只能一直向下
+            for (int[] temp : grid) {
+                sum += temp[0];
+            }
+            return sum;
+        }
+
+        for (int i = 1; i < grid.length; i++) {
+            //初始化最左一列
+            grid[i][0] += grid[i - 1][0];
+
+            for (int j = 1; j < grid[0].length; j++) {
+                if (i == 1) {
+                    //初始化最上一列
+                    grid[0][j] += grid[0][j - 1];
+                }
+
+                //看哪个比较小
+                grid[i][j] += Math.min(grid[i - 1][j], grid[i][j - 1]);
+            }
+        }
+        return grid[grid.length - 1][grid[0].length - 1];
+    }
+
+    /**
+     * 示例 1：
+     * 输入：grid = [[1,3,1],[1,5,1],[4,2,1]]
+     * 输出：7
+     * 解释：因为路径 1→3→1→1→1 的总和最小。
+     * <p>
+     * 示例 2：
+     * 输入：grid = [[1,2,3],[4,5,6]]
+     * 输出：12
+     */
+    @Test
+    public void try64() {
+        System.out.println("7->" + this.minPathSum(new int[][]{{1, 3, 1}, {1, 5, 1}, {4, 2, 1}}));
+        System.out.println("12->" + this.minPathSum(new int[][]{{1, 2, 3}, {4, 5, 6}}));
+    }
+
+    /**
+     * 72. 编辑距离
+     * <p>
+     * 给你两个单词word1 和word2，请你计算出将word1转换成word2 所使用的最少操作数。
+     * 你可以对一个单词进行如下三种操作：
+     * 插入一个字符
+     * 删除一个字符
+     * 替换一个字符
+     */
+    public int minDistance(String word1, String word2) {
+        int bLength = word2.length();
+        int aLength = word1.length();
+        //一个字符串为空 即另一个字符串的长度
+        if (word1 == null || aLength == 0) {
+            return word2 == null ? 0 : bLength;
+        }
+        if (word2 == null || bLength == 0) {
+            return aLength;
+        }
+        //当两个字符串都为空时不需要操作
+        int[][] dp = new int[aLength + 1][bLength + 1];
+        dp[0][0] = 0;
+        for (int i = 1; i <= aLength; i++) {
+            //初始化其中一个字符串为空的情况
+            dp[i][0] = i;
+
+            for (int j = 1; j <= bLength; j++) {
+                if (i == 1) {
+                    //初始化其中一个字符串为空的情况
+                    dp[0][j] = j;
+                }
+
+                //如果相等  不需要操作
+                if (word1.charAt(i - 1) == word2.charAt(j - 1)) {
+                    dp[i][j] = dp[i - 1][j - 1];
+                    continue;
+                }
+                //不相等 可以有三种操作
+                //1-插入一个字符  即word1上一个字符步数+1  dp[i-1][j] + 1
+                //2-删除一个字符  即word2上一个字符步数+1  dp[i][j-1] + 1
+                //3-替换一个字符  即word1与word2上一个字符步数+1 dp[i-1][j-1] +1
+                dp[i][j] = Math.min(Math.min(dp[i - 1][j - 1], dp[i - 1][j]), dp[i][j - 1]) + 1;
+            }
+        }
+
+        return dp[aLength][bLength];
+    }
+
+    /**
+     * 示例1：
+     * 输入：word1 = "horse", word2 = "ros"
+     * 输出：3
+     * 解释：
+     * horse -> rorse (将 'h' 替换为 'r')
+     * rorse -> rose (删除 'r')
+     * rose -> ros (删除 'e')
+     * <p>
+     * 示例2：
+     * 输入：word1 = "intention", word2 = "execution"
+     * 输出：5
+     * 解释：
+     * intention -> inention (删除 't')
+     * inention -> enention (将 'i' 替换为 'e')
+     * enention -> exention (将 'n' 替换为 'x')
+     * exention -> exection (将 'n' 替换为 'c')
+     * exection -> execution (插入 'u')
+     */
+    @Test
+    public void try72() {
+        System.out.println("3->" + this.minDistance("horse", "ros"));
+        System.out.println("5->" + this.minDistance("intention", "execution"));
     }
 }
